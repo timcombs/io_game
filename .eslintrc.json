@@ -16,6 +16,9 @@
     "no-plusplus": "off",
     "no-use-before-define": ["error", { "functions": false }],
     "object-curly-newline": "off",
-    "operator-linebreak": ["error", "after"]
+    "operator-linebreak": ["error", "after"],
+    "keyword-spacing": ["error", { 
+      "overrides": { "else": { "after": false, "before": false } }
+      }]
   }
 }
