@@ -19,6 +19,7 @@
     "operator-linebreak": ["error", "after"],
     "keyword-spacing": ["error", { 
       "overrides": { "else": { "after": false, "before": false } }
-      }]
+      }],
+    "arrow-body-style": ["warn", "as-needed"]
   }
 }
