@@ -65,8 +65,8 @@ export function getCurrentState() {
     const ratio = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
     return {
       me: interpolateObject(baseUpdate.me, next.me, ratio),
-      others: interpolateObject(baseUpdate.me, next.others, ratio),
-      bullets: interpolateObject(baseUpdate.me, next.bullets, ratio),
+      others: interpolateObjectArray(baseUpdate.me, next.others, ratio),
+      bullets: interpolateObjectArray(baseUpdate.me, next.bullets, ratio),
     };
   }
 }
@@ -79,7 +79,7 @@ function interpolateObject(object1, object2, ratio) {
   const interpolated = {};
   Object.keys(object1).forEach((key) => {
     if (key === 'direction') {
-      interpolated[key] = interpolatedDirection(object1[key], object2[key], ratio);
+      interpolated[key] = interpolateDirection(object1[key], object2[key], ratio);
     }else{
       interpolated[key] = object1[key] + (object2[key] - object1[key]) * ratio;
     }
