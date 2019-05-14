@@ -17,3 +17,5 @@ class Bullet extends ObjectClass {
            this.y > Constants.MAP_SIZE;
   }
 }
+
+module.exports = Bullet;
