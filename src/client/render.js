@@ -41,82 +41,81 @@ function render() {
   // Draw all players
   renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
+}
 
-  /* +++++++++ helper functions +++++++++++ */
-  function renderBackground(x, y) {
-    const backgroundX = MAP_SIZE / 2 - x + canvas.width / 2;
-    const backgroundY = MAP_SIZE / 2 - y + canvas.width / 2;
-    const backgroundGradient = context.createRadialGradient(
-      backgroundX,
-      backgroundY,
-      MAP_SIZE / 10,
-      backgroundX,
-      backgroundY,
-      MAP_SIZE / 2
-    );
+/* +++++++++ helper functions +++++++++++ */
+function renderBackground(x, y) {
+  const backgroundX = MAP_SIZE / 2 - x + canvas.width / 2;
+  const backgroundY = MAP_SIZE / 2 - y + canvas.width / 2;
+  const backgroundGradient = context.createRadialGradient(
+    backgroundX,
+    backgroundY,
+    MAP_SIZE / 10,
+    backgroundX,
+    backgroundY,
+    MAP_SIZE / 2
+  );
 
-    backgroundGradient.addColorStop(0, 'black');
-    backgroundGradient.addColorStop(1, 'gray');
-    context.fillStyle = backgroundGradient;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-  }
+  backgroundGradient.addColorStop(0, 'black');
+  backgroundGradient.addColorStop(1, 'gray');
+  context.fillStyle = backgroundGradient;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+}
 
-  // renders ship at given coordinates
-  function renderPlayer(me, player) {
-    const { x, y, direction } = player;
-    const canvasX = canvas.width / 2 + - me.x;
-    const canvasY = canvas.height / 2 + y - me.y;
+// renders ship at given coordinates
+function renderPlayer(me, player) {
+  const { x, y, direction } = player;
+  const canvasX = canvas.width / 2 + - me.x;
+  const canvasY = canvas.height / 2 + y - me.y;
 
-    // draw ship
-    context.save();
-    context.translate(canvasX, canvasY);
-    context.rotate(direction);
-    context.drawImage(
-      getAsset('ship.svg'),
-      -PLAYER_RADIUS,
-      -PLAYER_RADIUS,
-      PLAYER_RADIUS * 2,
-      PLAYER_RADIUS * 2,
-    );
-    context.restore();
+  // draw ship
+  context.save();
+  context.translate(canvasX, canvasY);
+  context.rotate(direction);
+  context.drawImage(
+    getAsset('ship.svg'),
+    -PLAYER_RADIUS,
+    -PLAYER_RADIUS,
+    PLAYER_RADIUS * 2,
+    PLAYER_RADIUS * 2,
+  );
+  context.restore();
 
-    // draw ship health bar
-    context.fillStyle = 'white';
-    context.fillRect(
-      canvasX - PLAYER_RADIUS,
-      canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2,
-      2,
-    );
-  }
+  // draw ship health bar
+  context.fillStyle = 'white';
+  context.fillRect(
+    canvasX - PLAYER_RADIUS,
+    canvasY + PLAYER_RADIUS + 8,
+    PLAYER_RADIUS * 2,
+    2,
+  );
+}
 
-  function renderBullet(me, bullet) {
-    const { x, y } = bullet;
-    context.drawImage(
-      getAsset('bullet.svg'),
-      canvas.width / 2 + x - me.x - BULLET_RADIUS,
-      canvas.height / 2 + y - me.y - BULLET_RADIUS,
-      BULLET_RADIUS * 2,
-      BULLET_RADIUS * 2,
-    );
-  }
+function renderBullet(me, bullet) {
+  const { x, y } = bullet;
+  context.drawImage(
+    getAsset('bullet.svg'),
+    canvas.width / 2 + x - me.x - BULLET_RADIUS,
+    canvas.height / 2 + y - me.y - BULLET_RADIUS,
+    BULLET_RADIUS * 2,
+    BULLET_RADIUS * 2,
+  );
+}
 
-  function renderMainMenu() {
-    const t = Date.now() / 7500;
-    const x = MAP_SIZE / 2 + 800 * Math.cos(t);
-    const y = MAP_SIZE / 2 + 800 * Math.sin(t);
-    renderBackground(x, y);
-  }
+function renderMainMenu() {
+  const t = Date.now() / 7500;
+  const x = MAP_SIZE / 2 + 800 * Math.cos(t);
+  const y = MAP_SIZE / 2 + 800 * Math.sin(t);
+  renderBackground(x, y);
+}
 
 
-  let renderInterval = setInterval(renderMainMenu, 1000 / 60);
+let renderInterval = setInterval(renderMainMenu, 1000 / 60);
 
-  export function startRendering() {
-    renderInterval = setInterval(render, 1000 / 60);
-  }
+export function startRendering() {
+  renderInterval = setInterval(render, 1000 / 60);
+}
 
-  export function stopRendering() {
-    clearInterval(renderInterval);
-  }
-
+export function stopRendering() {
+  clearInterval(renderInterval);
 }
