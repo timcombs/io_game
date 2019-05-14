@@ -1,3 +1,7 @@
+import { updateLeaderboard } from './leaderboard';
+
+// "current" state will always be RENDER_DELAY millisec behind server time
+// delay makes gameplay smoother and lag less noticeable
 const RENDER_DELAY = 100;
 
 const gameUpdates = [];
@@ -47,24 +51,24 @@ export function getCurrentState() {
   if (!firstServerTimestamp) {
     return {};
   }
-}
 
-const base = getBaseUpdate();
-const serverTime = currentServerTime();
+  const base = getBaseUpdate();
+  const serverTime = currentServerTime();
 
-// If base is the most recent update we have, use its state
-// If not, then interpolate between base state and state of next base (base + 1)
-if (base < 0 || base === gameUpdates.length - 1) {
-  return gameUpdates[gameUpdates.length - 1];
-}else{
-  const baseUpdate = gameUpdates[base];
-  const next = gameUpdates[base + 1];
-  const ratio = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
-  return {
-    me: interpolateObject(baseUpdate.me, next.me, ratio),
-    others: interpolateObject(baseUpdate.me, next.others, ratio),
-    bullets: interpolateObject(baseUpdate.me, next.bullets, ratio),
-  };
+  // If base is the most recent update we have, use its state
+  // If not, then interpolate between base state and state of next base (base + 1)
+  if (base < 0 || base === gameUpdates.length - 1) {
+    return gameUpdates[gameUpdates.length - 1];
+  }else{
+    const baseUpdate = gameUpdates[base];
+    const next = gameUpdates[base + 1];
+    const ratio = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
+    return {
+      me: interpolateObject(baseUpdate.me, next.me, ratio),
+      others: interpolateObject(baseUpdate.me, next.others, ratio),
+      bullets: interpolateObject(baseUpdate.me, next.bullets, ratio),
+    };
+  }
 }
 
 function interpolateObject(object1, object2, ratio) {
