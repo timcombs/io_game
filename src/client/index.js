@@ -5,6 +5,8 @@ import { downloadAssets } from './assets';
 import { initState } from './state';
 import { setLeaderboardHidden } from './leaderboard';
 
+// using bootstrap here for convenience. too heavy for real site
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/main.css';
 
 const playMenu = document.getElementById('play-menu');
@@ -12,7 +14,7 @@ const playButton = document.getElementById('play-button');
 const usernameInput = document.getElementById('username-input');
 
 Promise.all([
-  connect(),
+  connect(onGameOver),
   downloadAssets(),
 ]).then(() => {
   playMenu.classList.remove('hidden');
@@ -26,4 +28,11 @@ Promise.all([
     startRendering();
     setLeaderboardHidden(false);
   };
-});
+}).catch(console.error);
+
+function onGameOver() {
+  stopCapturingInput();
+  stopRendering();
+  playMenu.classList.remove('hidden');
+  setLeaderboardHidden(true);
+}

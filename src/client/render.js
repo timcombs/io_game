@@ -53,7 +53,7 @@ function renderBackground(x, y) {
     MAP_SIZE / 10,
     backgroundX,
     backgroundY,
-    MAP_SIZE / 2
+    MAP_SIZE / 2,
   );
 
   backgroundGradient.addColorStop(0, 'black');
@@ -65,7 +65,7 @@ function renderBackground(x, y) {
 // renders ship at given coordinates
 function renderPlayer(me, player) {
   const { x, y, direction } = player;
-  const canvasX = canvas.width / 2 + - me.x;
+  const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
   // draw ship
@@ -81,12 +81,20 @@ function renderPlayer(me, player) {
   );
   context.restore();
 
-  // draw ship health bar
+  // draw health bar
   context.fillStyle = 'white';
   context.fillRect(
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
     PLAYER_RADIUS * 2,
+    2,
+  );
+
+  context.fillStyle = 'red';
+  context.fillRect(
+    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP,
+    canvasY + PLAYER_RADIUS + 8,
+    PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
     2,
   );
 }
@@ -112,10 +120,14 @@ function renderMainMenu() {
 
 let renderInterval = setInterval(renderMainMenu, 1000 / 60);
 
+// replaces main menu rendering with game rendering
 export function startRendering() {
+  clearInterval(renderInterval);
   renderInterval = setInterval(render, 1000 / 60);
 }
 
+// replaces game rendering with main menu rendering
 export function stopRendering() {
   clearInterval(renderInterval);
+  renderInterval = setInterval(renderMainMenu, 1000 / 60);
 }
