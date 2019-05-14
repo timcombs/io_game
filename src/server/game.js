@@ -6,7 +6,7 @@ class Game {
   constructor() {
     this.sockets = {};
     this.players = {};
-    this.bullets = {};
+    this.bullets = [];
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
