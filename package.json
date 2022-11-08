@@ -28,7 +28,7 @@
     "mini-css-extract-plugin": "^0.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "shortid": "^2.2.14",
-    "socket.io": "^2.4.0",
+    "socket.io": "^2.5.0",
     "socket.io-client": "^2.2.0",
     "terser-webpack-plugin": "^1.2.3",
     "throttle-debounce": "^2.1.0",
