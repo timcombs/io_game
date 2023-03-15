@@ -32,7 +32,7 @@
     "socket.io-client": "^2.5.0",
     "terser-webpack-plugin": "^1.4.5",
     "throttle-debounce": "^2.1.0",
-    "webpack": "^5.75.0",
+    "webpack": "^5.76.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-middleware": "^3.6.2",
     "webpack-merge": "^4.2.1"
